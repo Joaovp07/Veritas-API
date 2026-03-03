@@ -13,6 +13,8 @@ export default defineConfig(({mode}) => {
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),
+        'react-router-dom': path.resolve(__dirname, 'src/vendor/react-router-dom.tsx'),
+        axios: path.resolve(__dirname, 'src/vendor/axios.ts'),
       },
     },
     server: {

@@ -320,6 +320,28 @@ async function startServer() {
     }
   });
 
+
+  app.get("/api/user/profile", authMiddleware, (req, res, next) => {
+    try {
+      const authUser = (req as Request & { user?: AuthPayload }).user;
+      if (!authUser) {
+        throw <ApiError>{ status: 401, code: "UNAUTHORIZED", message: "Usuário não autenticado." };
+      }
+
+      const user = db.prepare("SELECT id, name, email FROM users WHERE id = ?").get(authUser.sub) as
+        | { id: number; name: string; email: string }
+        | undefined;
+
+      if (!user) {
+        throw <ApiError>{ status: 404, code: "USER_NOT_FOUND", message: "Usuário não encontrado." };
+      }
+
+      res.json({ user });
+    } catch (error) {
+      next(error);
+    }
+  });
+
   app.post("/api/forms/validate", authMiddleware, (req, res, next) => {
     try {
       const payload = validateFormInput(req.body);
