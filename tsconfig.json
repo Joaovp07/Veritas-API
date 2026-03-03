@@ -18,6 +18,12 @@
     "paths": {
       "@/*": [
         "./*"
+      ],
+      "react-router-dom": [
+        "./src/vendor/react-router-dom.tsx"
+      ],
+      "axios": [
+        "./src/vendor/axios.ts"
       ]
     },
     "allowImportingTsExtensions": true,
